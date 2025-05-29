@@ -1,0 +1,20 @@
+# Vue / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+coverage/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# IDE & Editor
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

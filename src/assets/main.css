@@ -1,0 +1,17 @@
+:root {
+  --monster-green: #6a994e;
+  --monster-dark: #111111;
+  --monster-dark-2: #1a1a1a;
+  --monster-dark-3: #222;
+  --monster-light-1: #ffffff;
+  --monster-light-2: #cccccc;
+}
+
+body {
+  background-color: var(--monster-dark);
+  color: var(--monster-light-1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
