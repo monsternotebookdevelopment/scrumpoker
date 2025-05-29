@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monster-poker-frontend
+  labels:
+    app: monster-poker-frontend
+spec:
+  replicas: 2 # Frontend için 2 kopya olabilir
+  selector:
+    matchLabels:
+      app: monster-poker-frontend
+  template:
+    metadata:
+      labels:
+        app: monster-poker-frontend
+    spec:
+      containers:
+      - name: monster-poker-frontend
+        image: youracrname.azurecr.io/monster-poker-frontend:latest # ACR adresiniz ve imaj adı
+        ports:
+        - containerPort: 80
