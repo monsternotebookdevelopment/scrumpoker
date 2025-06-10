@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "monster.fullname" . }}
+  labels:
+    {{- include "monster.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "monster.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "monster.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "monster.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.containerPort }}
+              protocol: TCP
+          # volumeMounts:
+          # - name: config-volume
+          #   mountPath: /app/config
+          {{- if .Values.probe }}
+          livenessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            failureThreshold: 1
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      # volumes:
+      # - name: config-volume
+      #   configMap:
+      #     name: {{ include "monster.fullname" . }}
+      {{- with .Values.nodeSelector }}                
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.kubernetes.io/name
+                      operator: In
+                      values:
+                        - {{ include "monster.fullname" . }}
+                    - key: app.kubernetes.io/instance
+                      operator: In
+                      values:
+                        - {{ .Release.Name }}
+                topologyKey: kubernetes.io/hostname
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "monster.fullname" . }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      {{- include "monster.selectorLabels" . | nindent 6 }}
