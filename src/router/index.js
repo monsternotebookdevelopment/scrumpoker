@@ -16,15 +16,5 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  const requiresNickname = to.name === "poker-room";
-  const hasNickname = !!localStorage.getItem("nickname");
-
-  if (requiresNickname && !hasNickname) {
-    next({ name: "home", query: { redirect: to.fullPath } });
-  } else {
-    next();
-  }
-});
 
 export default router;
