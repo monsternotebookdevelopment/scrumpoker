@@ -16,12 +16,11 @@
       
       <div class="player-info">
         <div class="player-name">
-          <span v-if="participant.userId === store.roomAdminId" class="admin-icon">👑</span>
           <span>{{ participant.name }}</span>
         </div>
         <div class="vote-status-indicator">
           <span v-if="participant.vote !== null" class="voted-checkmark">
-            👍🏻
+            👽
           </span>
         </div>
       </div>
@@ -101,12 +100,14 @@ const store = usePokerStore();
   align-items: center;
   gap: 8px;
 }
+
+/* Admin ikonu artık olmadığı için kaldırılabilir. */
 .admin-icon {
   font-size: 0.8rem;
 }
 
 .vote-status-indicator {
-  min-height: 1.3rem; /* Yüksekliği emoji boyutuna göre biraz artırdık */
+  min-height: 1.3rem;
   display: flex;
   align-items: center;
   justify-content: center;

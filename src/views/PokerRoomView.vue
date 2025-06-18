@@ -16,7 +16,7 @@
       <VotingArea />
     </main>
 
-    <div class="admin-controls" :class="{ hidden: !store.isCurrentUserAdmin }">
+    <div class="admin-controls">
       <button 
         @click="store.revealVotes" 
         :disabled="!store.votesRevealed && store.votedCount === 0"
@@ -69,6 +69,7 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
+/* .hidden class'ı artık kullanılmadığı için kaldırılabilir, ama zararı yok. */
 .admin-controls.hidden {
   visibility: hidden;
 }

@@ -20,7 +20,7 @@ export const usePokerStore = defineStore("poker", {
     participants: [],
     selectedCard: null,
     votesRevealed: false,
-    roomAdminId: null,
+    // roomAdminId kaldırıldı.
   }),
 
   getters: {
@@ -33,12 +33,7 @@ export const usePokerStore = defineStore("poker", {
     votedCount: (state) => {
       return state.participants.filter((p) => p.vote !== null).length;
     },
-    isCurrentUserAdmin: (state) => {
-      const isAdmin = state.persistentUserId && state.roomAdminId && state.persistentUserId === state.roomAdminId;
-
-      console.log(`[GETTER CHECK] Am I admin? -> ${isAdmin} (MyID: ${state.persistentUserId}, AdminID: ${state.roomAdminId})`);
-      return isAdmin;
-    }
+    // isCurrentUserAdmin getter'ı kaldırıldı.
   },
 
   actions: {
@@ -58,7 +53,7 @@ export const usePokerStore = defineStore("poker", {
       socket.on("updateGameState", (gameState) => {
         this.votesRevealed = gameState.votesRevealed;
         this.participants = gameState.participants;
-        this.roomAdminId = gameState.adminId;
+        // this.roomAdminId ataması kaldırıldı.
       });
       
       socket.on("roundReset", () => {
