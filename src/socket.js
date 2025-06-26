@@ -6,11 +6,9 @@ import { io } from 'socket.io-client';
 // Bu şekilde, spesifik bir URL (http://monster-poker-api:3000 veya http://localhost:3001)
 // belirtmemize gerek kalmıyor. Tarayıcı kendi bulunduğu adresi baz alacak.
 const socket = io({
-  path: "/socket.io/", // Nginx'in proxy'leyeceği yol
+  path: "/scrum-poker/socket.io/", // Nginx'in proxy'leyeceği yol
   autoConnect: false,
   transports: ['websocket', 'polling'] 
 });
-
-console.log('Socket.IO client initialized to connect to current host via path "/socket.io/"');
 
 export default socket;
