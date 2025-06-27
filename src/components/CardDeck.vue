@@ -17,20 +17,20 @@ const store = usePokerStore();
   display: grid;
   grid-template-columns: repeat(5, 70px);
   justify-content: center;
-  gap: 15px;
-  padding: 10px;
+  gap: 12px;
+  padding: 0px;
 }
 
 .poker-card {
-  width: 70px;
-  height: 110px;
+  width: 60px;
+  height: 90px;
   background-color: var(--monster-dark-3);
   border: 2px solid #555;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: bold;
   cursor: pointer;
   transition: all 0.2s ease;
