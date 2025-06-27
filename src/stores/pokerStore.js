@@ -27,8 +27,17 @@ export const usePokerStore = defineStore("poker", {
     averageVote: (state) => {
       const validVotes = state.participants.map((p) => p.vote).filter((vote) => typeof vote === "number");
       if (validVotes.length === 0) { return "-"; }
+      
       const sum = validVotes.reduce((acc, vote) => acc + vote, 0);
-      return (sum / validVotes.length).toFixed(1);
+      const avg = sum / validVotes.length;
+
+      // Eğer ortalama tam sayı ise (örn: 5.0), ondalık kısmı gösterme.
+      // Değilse (örn: 4.8), bir ondalık basamak göster.
+      if (Number.isInteger(avg)) {
+        return avg;
+      } else {
+        return avg.toFixed(1);
+      }
     },
     votedCount: (state) => {
       return state.participants.filter((p) => p.vote !== null).length;
