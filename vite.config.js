@@ -3,8 +3,8 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 
 export default defineConfig({
+  base: "/scrumpoker",
   plugins: [vue()],
-  base: '/scrum-poker/',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/socket.io': {
-        target: 'http://localhost:3000', // Node.js sunucunuzun adresi
-        ws: true, // WebSocket bağlantıları için gereklidir
+        target: 'http://localhost:3000',
+        ws: true,
       },
     }
   }

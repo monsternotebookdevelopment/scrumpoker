@@ -1,12 +1,12 @@
-// monster-poker/src/socket.js
+// src/socket.js
 import { io } from 'socket.io-client';
 
-// Tarayıcı, Socket.IO bağlantısını frontend'in sunulduğu aynı host ve porta,
-// /socket.io/ yolu üzerinden yapacak. Nginx bu isteği backend'e proxy'leyecek.
-// Bu şekilde, spesifik bir URL (http://monster-poker-api:3000 veya http://localhost:3001)
-// belirtmemize gerek kalmıyor. Tarayıcı kendi bulunduğu adresi baz alacak.
-const socket = io({
-  path: "/scrum-poker/socket.io/", // Nginx'in proxy'leyeceği yol
+// GEÇİCİ - LOKALDE TEST İÇİN DOĞRUDAN BAĞLANTI
+// Vite proxy'sini atlayıp direkt backend'e bağlanmayı deniyoruz.
+const URL = 'http://localhost:3000';
+
+const socket = io(URL, {
+  // path: "/socket.io/", // Doğrudan URL verdiğimizde path'i genellikle belirtmeye gerek kalmaz, server standard path'i dinler.
   autoConnect: false,
   transports: ['websocket', 'polling'] 
 });
