@@ -3,7 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 
 export default defineConfig({
-  base: "/scrum-poker",
+  base: "/scrumpoker/",
   plugins: [vue()],
   resolve: {
     alias: {
